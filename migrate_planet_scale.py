@@ -1,8 +1,10 @@
-import mysql.connector
 import glob
-import os
-from dotenv import load_dotenv
 import logging
+import os
+import sys
+
+import mysql.connector
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -21,7 +23,9 @@ def read_and_create_from_sql(sql_file):
 
 
 if __name__ == "__main__":
-    planet_scale_dump_dir = "/home/george/pscale_dump_dividend_record_main"
+    planet_scale_dump_dir = sys.argv[-1]
+    # full arg should look like this python migrate_planet_scale {FULLPATH}
+    # FULLPATH="/home/{user}/planetscale_migration/pscale_dump_dividend_record_main"
 
     all_schemas = glob.glob(f"{planet_scale_dump_dir}/*schema.sql")
     for file in all_schemas:
